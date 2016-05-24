@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}首页-迈傲数据{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <h4>覆盖建筑物</h4>
+
+            <h2 class="fui-home text-muted"></h2>
+
+            <h1 class="text-count">{{ building }}</h1>
+            <!--<h6 class="text-center text-muted">较上月</h6>
+            <h4 class="text-center text-increase">增加 3.5<small>%</small></h4>-->
+            <h6 class="text-center text-muted">建筑类型包括交通、医院、商场、酒店、写字楼和公共服务设施.</h6>
+        </div>
+        <div class="col-sm-4 text-center">
+            <h4>已采集POI</h4>
+
+            <h2 class="fui-foursquare text-muted"></h2>
+
+            <h1 class="text-count">{{ poi }}</h1>
+            <!--<h6 class="text-center text-muted">较上月</h6>
+            <h4 class="text-center text-increase">增加 18.7<small>%</small></h4>-->
+            <h6 class="text-center text-muted">POI为左右建筑物中的空间单位, 例如商铺, 酒店房间等.</h6>
+        </div>
+        <div class="col-sm-4 text-center">
+            <h4>Wi-Fi热点设备</h4>
+
+            <h2 class="fui-spotify text-muted"></h2>
+
+            <h1 class="text-count">{{ ap }}</h1>
+            <!-- <h6 class="text-center text-muted">较上月</h6>
+             <h4 class="text-center text-decrease">增加 11.2<small>%</small></h4>-->
+            <h6 class="text-center text-muted">Wi-Fi为已有公共建筑中覆盖的AP数量</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div id="chart" class="col-xs-12" style="width: 100%; height: 500px;"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static',filename='js/vendor/echartTheme/china.js') }}"></script>
+    <script>
+        var myChart = echarts.init(document.getElementById('chart'), 'dark');
+        //data数据格式: {name: '海门', value: 9},
+        // geo数据格式: '海门':[121.15,31.89],
+        var data = new Array();
+        var geoCoordMap = new Object();
+        //var geo = new Array();
+        $.get('/api/v1.0/building/rank/city').done(function (result) {
+            $.each(result, function (name, object) {
+                $.each(object, function (key, value) {
+                    var geo = new Array();
+                    var data_obj = new Object();
+                    var city_name = value.city;
+                    var lat = parseFloat(value.lat).toFixed(6);
+                    var long = parseFloat(value.long).toFixed(6);
+                    data_obj.name = city_name;
+                    data_obj.value = value.count;
+                    data.push(data_obj);
+                    geo[0] = long;
+                    geo[1] = lat;
+                    geoCoordMap[city_name] = geo;
+                    //alert(name + key + value.city + value.count+data[key]+geoCoordMap[city_name])
+                });
+                //alert(data[23].name + geoCoordMap[data[23].name]);
+            });
+
+            var convertData = function (data) {
+                var res = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    var geoCoord = geoCoordMap[data[i].name];
+                    if (geoCoord) {
+                        res.push({
+                            name: data[i].name,
+                            value: geoCoord.concat(data[i].value)
+                        });
+                    }
+                }
+                //alert(res[23].name + res[23].value);
+                return res;
+            };
+            myChart.setOption({
+                backgroundColor: '#2C3E50',
+                title: {
+                    text: '全国楼宇采集覆盖',
+                    subtext: 'Data from Mapout',
+                    sublink: 'http://mapout.net',
+                    x: 'center',
+                    textStyle: {
+                        color: '#BDC3C7'
+                    }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        return params.name + ' : ' + params.value[2];
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    y: 'bottom',
+                    x: 'right',
+                    data: ['建筑物'],
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                dataRange: {
+                    min: 0,
+                    max: 500,
+                    calculable: true,
+                    color: ['#d94e5d', '#eac736', '#50a3ba'],
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                geo: {
+                    map: 'china',
+                    label: {
+                        emphasis: {
+                            show: false
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            areaColor: '#34495E',
+                            borderColor: '#4F617D'
+                        },
+                        emphasis: {
+                            areaColor: '#4F617D'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '建筑物',
+                        type: 'scatter',
+                        coordinateSystem: 'geo',
+                        data: convertData(data),
+                        symbolSize: 12,
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: false
+                            }
+                        },
+                        itemStyle: {
+                            emphasis: {
+                                borderColor: '#fff',
+                                borderWidth: 1
+                            }
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}首页-迈傲数据{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12 text-left">
+            <h2 class="text-center">找到我们</h2>
+
+            <p class="text-center">
+                <small>我们的开放空间欢迎小伙伴的到来!</small>
+            </p>
+            <img src="{{ url_for('static',filename='img/map.png') }}" class="img-rounded img-responsive">
+            <h4>迈傲.广州</h4>
+
+            <p>
+                <small>地址: 广州市科学城科学大道99号科汇金谷四街11号901单元</small>
+            </p>
+            <p>
+                <small>电话: 020-29866709</small>
+            </p>
+            <p>
+                <small>邮编: 510000</small>
+            </p>
+            <h4>迈傲.北京</h4>
+
+            <p>
+                <small>地址: 北京市朝阳区望京SOHO T1 1-3-0301</small>
+            </p>
+            <p>
+                <small>电话: 010-84783661</small>
+            </p>
+            <p>
+                <small>邮编: 100102</small>
+            </p>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

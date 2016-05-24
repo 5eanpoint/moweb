@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}首页-迈傲数据{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12 text-left">
+            <h2 class="text-center">迈傲科技</h2>
+
+            <p class="text-center">
+                <small>迈傲信息科技有限公司,是一家室内位置数据公司。由京信通信数据有限公司、迈傲信息科技( 港)有限公司、广州州在哪儿信息技术有限公司注资1亿元人名币成立。</small>
+            </p>
+            <img src="{{ url_for('static',filename='img/02.jpg') }}" class="img-rounded img-responsive">
+            <h4>专注于我们的愿景</h4>
+
+            <p>
+                <small>做中国最好的室内综合数据服务商，这一愿景将让我们与合作伙伴一起专注于提升流量的质量。</small>
+            </p>
+            <h4>一句话了解我们的能力</h4>
+
+            <p>
+                <small>迈傲利用线下丰富的Wi-Fi热点数据,结合地磁、气压等传感器指标，帮助应用开发者以及商业客户进行线下行为分析，优化用户模型，提升运营能力。</small>
+            </p>
+            <h4>我们的团队怎么样?</h4>
+
+            <p>
+                <small>
+                    公司前身创办于2012年，是国内最找投身室内定位领域的公司之一。团队成员来自Oracle、IBM、UTstar等企业，有移动电信行业运营高管、国际知名线通信射频专家光纤与WI-FI通信产品芯片牛人、国家级智慧城市大数据及物联网应用技术大拿、互联网创投业顶尖推手。
+                </small>
+            </p>
+            <h4>我们做了些什么</h4>
+
+            <p>
+                <small>我们用不到一年的时间，获取了20+城市里8000+个建筑物的室内单元与位置数据，到2016年底，将会覆盖20000个建筑物，在北上广深的覆盖密度，更能使80%的流量具备线下活动场景特征。
+                </small>
+            </p>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

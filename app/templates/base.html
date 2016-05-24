@@ -1,0 +1,115 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}迈傲数据{% endblock %}
+
+{% block head %}
+
+    {% block style %}
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/vendor/bootstrap.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/flat-ui.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/mapout.css') }}" type="text/css">
+        <link rel="shortcut icon" href="{{ url_for('static',filename='img/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ url_for('static',filename='img/favicon.ico') }}" type="image/x-icon">
+    {% endblock %}
+{% endblock %}
+
+{% block navbar %}
+    <div class="row" id="navigationBar">
+        <div class="col-xs-12">
+            <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navbar-collapse-01">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="#">迈傲科技|mapout</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a href="/">首页</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                数据洞察
+                                <b class="caret"></b>
+                            </a>
+                            <span class="dropdown-arrow"></span>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/wifi">室内Wi-Fi统计</a>
+                                </li>
+                                <li>
+                                    <a href="/poi">场景POI信息</a>
+                                </li>
+                                <!--<li>
+                                  <a href="#">周边商业动态分析</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                  <a href="#">报告下载</a>
+                                </li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/development">开放平台</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                关于我们
+                                <b class="caret"></b>
+                            </a>
+                            <span class="dropdown-arrow"></span>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/about/intro">简要介绍</a>
+                                </li>
+                                <li>
+                                    <a href="#">职位招聘</a>
+                                </li>
+                                <li>
+                                    <a href="/about/contact">联系方式</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right" action="#" role="search">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" id="navbarInput-01" type="search" placeholder="查询">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn">
+                          <span class="fui-search"></span>
+                      </button>
+                    </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block page_content %}{% endblock %}
+        {% block footer %}
+            <div class="row footer" id="footer">
+                <div class="col-xs-12 text-center">
+                    <p class="palette-paragraph">中国&nbsp广东省&nbsp广州市科学城科汇金谷四街11号901单元</p>
+
+                    <p class="palette-paragraph">Copyright &copy; 2016 广州迈傲信息科技有限公司</p>
+                </div>
+            </div>
+            </div>
+        {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static',filename='js/vendor/html5shiv.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vendor/respond.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vendor/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/flat-ui.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vendor/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vendor/echartTheme/dark.js') }}"></script>
+{% endblock %}
